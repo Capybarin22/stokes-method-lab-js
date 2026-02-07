@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Определение вязкости жидкости методом Стокса</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+	<div class="container">
+		<header>
+			<h1><i class="fas fa-vial"></i> Определение вязкости жидкости методом Стокса</h1>
+			<p class="subtitle">Интерактивное учебное пособие для выполнения лабораторной работы по физике</p>
+		</header>
+		<div class="step-indicator">
+			<div class="step completed" id="step1">
+				<div class="step-circle">1</div>
+				<div>Теоретическая часть</div>
+			</div>
+			<div class="step active" id="step2">
+				<div class="step-circle">2</div>
+				<div>Эксперимент</div>
+			</div>
+			<div class="step" id="step3">
+				<div class="step-circle">3</div>
+				<div>Результаты</div>
+			</div>
+		</div>
+		<div class="main-content">
+			<section class="theory-section">
+				<h2><i class="fas fa-book-open"></i> Теоретическая часть</h2>
+				<p>Метод Стокса основан на изучении движения шарика в вязкой жидкости. На шарик, падающий в жидкости, действуют три силы:</p>
+				<ul style="margin-left: 20px; margin-top: 10px; margin-bottom: 15px;">
+					<li>Сила тяжести <span class="highlight">F<sub>т</sub> = mg</span></li>
+					<li>Выталкивающая сила Архимеда <span class="highlight">F<sub>А</sub> = ρ<sub>ж</sub>gV</span></li>
+					<li>Сила сопротивления (сила Стокса) <span class="highlight">F<sub>с</sub> = 6πηrv</span></li>
+				</ul>
+				<p>Когда шарик достигает постоянной скорости (установившегося движения), сумма сил равна нулю:</p>
+				<div class="formula">
+					mg = ρ<sub>ж</sub>gV + 6πηrv
+				</div>
+				<p>Отсюда можно вывести формулу для определения коэффициента вязкости:</p>
+				<div class="formula">
+					η = <sup>2</sup>&frasl;<sub>9</sub> · <sup>(ρ<sub>ш</sub> - ρ<sub>ж</sub>)gr<sup>2</sup></sup>&frasl;<sub>v</sub>
+				</div>
+				<h3>Обозначения:</h3>
+				<ul style="margin-left: 20px;">
+					<li><span class="highlight">η</span> - коэффициент динамической вязкости (Па·с)</li>
+					<li><span class="highlight">ρ<sub>ш</sub></span> - плотность материала шарика (кг/м³)</li>
+					<li><span class="highlight">ρ<sub>ж</sub></span> - плотность жидкости (кг/м³)</li>
+					<li><span class="highlight">g</span> - ускорение свободного падения (9.81 м/с²)</li>
+					<li><span class="highlight">r</span> - радиус шарика (м)</li>
+					<li><span class="highlight">v</span> - скорость установившегося движения шарика (м/с)</li>
+				</ul>
+				<h3>Условия применимости формулы Стокса:</h3>
+				<ul style="margin-left: 20px;">
+					<li>Движение шарика должно быть равномерным и прямолинейным</li>
+					<li>Жидкость должна быть неограниченной (влияние стенок сосуда минимально)</li>
+					<li>Шарик должен быть маленьким и гладким</li>
+					<li>Скорость движения должна быть небольшой (ламинарное течение)</li>
+				</ul>
+			</section>
+			<section class="experiment-section">
+				<h2><i class="fas fa-flask"></i> Виртуальный эксперимент</h2>
+				<div class="experiment-container">
+					<div class="cylinder" id="cylinder">
+						<div class="ball" id="ball"></div>
+					</div>
+					<div class="controls">
+						<div class="control-group">
+							<label for="liquid">Жидкость:</label>
+							<select id="liquid">
+								<option value="0.89">Вода (ρ=1000 кг/м³)</option>
+								<option value="1.5">Масло подсолнечное (ρ=920 кг/м³)</option>
+								<option value="8.5">Масло моторное (ρ=880 кг/м³)</option>
+								<option value="12.3">Глицерин (ρ=1260 кг/м³)</option>
+							</select>
+							<div>Плотность жидкости: <span id="liquid-density" class="value-display">1000 кг/м³</span></div>
+							<div>Вязкость жидкости: <span id="liquid-viscosity" class="value-display">0.89 Па·с</span></div>
+							<label for="ball-density">Плотность шарика:</label>
+							<input type="range" id="ball-density" min="2000" max="8000" step="100" value="7800">
+							<div>Значение: <span id="ball-density-value" class="value-display">7800 кг/м³</span></div>
+							<label for="ball-radius">Радиус шарика:</label>
+							<input type="range" id="ball-radius" min="1" max="10" step="0.5" value="3">
+							<div>Значение: <span id="ball-radius-value" class="value-display">3 мм</span></div>
+						</div>
+						<div class="control-group">
+							<label for="cylinder-height">Высота цилиндра:</label>
+							<input type="range" id="cylinder-height" min="300" max="500" step="10" value="400">
+							<div>Значение: <span id="cylinder-height-value" class="value-display">400 мм</span></div>
+							<label for="measure-distance">Измеряемый путь:</label>
+							<input type="range" id="measure-distance" min="200" max="350" step="10" value="300">
+							<div>Значение: <span id="measure-distance-value" class="value-display">300 мм</span></div>
+							<div style="margin-top: 20px; padding: 15px; background-color: #e7f3ff; border-radius: 8px;">
+								<div>Скорость шарика: <span id="ball-speed" class="value-display">0 м/с</span></div>
+								<div>Время прохождения: <span id="ball-time" class="value-display">0 с</span></div>
+								<div>Сила сопротивления: <span id="resistance-force" class="value-display">0 Н</span></div>
+							</div>
+						</div>
+					</div>
+					<div class="buttons">
+						<button id="start-btn"><i class="fas fa-play"></i> Начать эксперимент</button>
+						<button id="reset-btn" class="button-secondary"><i class="fas fa-redo"></i> Сбросить</button>
+						<button id="calculate-btn" class="button-success"><i class="fas fa-calculator"></i> Рассчитать вязкость</button>
+					</div>
+				</div>
+			</section>
+		</div>
+		<section class="results-section" id="results-section" style="display: none;">
+			<h2><i class="fas fa-chart-line"></i> Результаты измерений и расчетов</h2>
+			<div class="results-grid">
+				<div class="result-card">
+					<div>Измеренная скорость</div>
+					<div id="measured-speed" class="result-value">0</div>
+					<div class="result-unit">м/с</div>
+				</div>
+				<div class="result-card">
+					<div>Расчетная вязкость</div>
+					<div id="calculated-viscosity" class="result-value">0</div>
+					<div class="result-unit">Па·с</div>
+				</div>
+				<div class="result-card">
+					<div>Погрешность</div>
+					<div id="error-value" class="result-value">0</div>
+					<div class="result-unit">%</div>
+				</div>
+			</div>
+			<h3 style="margin-top: 30px;">Таблица измерений</h3>
+			<div class="table-container">
+				<table id="results-table">
+					<thead>
+						<tr>
+							<th>№</th>
+							<th>Расстояние, м</th>
+							<th>Время, с</th>
+							<th>Скорость, м/с</th>
+							<th>Вязкость, Па·с</th>
+							<th>Погрешность, %</th>
+						</tr>
+					</thead>
+					<tbody id="results-table-body">
+						<!-- Данные будут добавляться через JavaScript -->
+					</tbody>
+				</table>
+			</div>
+			<div class="buttons" style="margin-top: 30px;">
+				<button id="export-btn"><i class="fas fa-file-export"></i> Экспорт данных</button>
+				<button id="new-experiment-btn" class="button-secondary"><i class="fas fa-plus-circle"></i> Новый эксперимент</button>
+			</div>
+		</section>
+		<footer>
+			<p>Интерактивное учебное пособие по физике &copy; 2023 | Метод Стокса для определения вязкости жидкости</p>
+			<p style="margin-top: 10px;">Используйте это пособие для подготовки к лабораторной работе и понимания физических принципов метода.</p>
+		</footer>
+	</div>
+	<script src="script.js"></script>
+</body>
+
+</html>
